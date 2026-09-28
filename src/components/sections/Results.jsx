@@ -4,16 +4,19 @@ import SectionHeading from '../ui/SectionHeading'
 
 function Results() {
   return (
-    <section id="results" className="bg-primary-dark py-12 md:py-16 lg:py-20 xl:py-[72px]">
-      <div className="mx-auto w-full max-w-[1536px] px-4 sm:px-6 lg:px-8">
+    <section id="results" className="bg-brand-dark py-20 md:py-24 lg:py-32 relative overflow-hidden">
+      {/* Decorative blurred orb */}
+      <div className="absolute -left-20 top-40 h-96 w-96 rounded-full bg-brand-orange/5 blur-3xl pointer-events-none" />
+
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         <SectionHeading
           light
           title="Results That Speak"
-          description="Real businesses, real growth, real impact. See how we've helped our clients achieve their goals."
+          description="Real businesses, real growth, real impact. See how we've helped our clients achieve their goals through our data-driven approach."
         />
-        <div className="mt-9 grid gap-5 sm:mt-12 sm:gap-6 md:grid-cols-2 lg:mt-14 lg:grid-cols-3 lg:gap-8 xl:gap-9">
-          {resultsData.map((result) => (
-            <ResultCard key={result.title} result={result} />
+        <div className="mt-16 grid gap-8 lg:grid-cols-3">
+          {resultsData.map((result, index) => (
+            <ResultCard key={result.title} result={result} index={index} />
           ))}
         </div>
       </div>

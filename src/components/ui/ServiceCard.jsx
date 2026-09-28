@@ -1,32 +1,43 @@
 import {
-  BriefcaseBusiness,
-  ChartLine,
+  Briefcase,
+  ChartLineUp,
   Palette,
   Target,
-} from 'lucide-react'
+} from '@phosphor-icons/react'
+import { motion } from 'framer-motion'
 
 const iconMap = {
-  growth: ChartLine,
+  growth: ChartLineUp,
   target: Target,
   brand: Palette,
-  consulting: BriefcaseBusiness,
+  consulting: Briefcase,
 }
 
-function ServiceCard({ service }) {
-  const Icon = iconMap[service.icon] || ChartLine
+function ServiceCard({ service, index = 0 }) {
+  const Icon = iconMap[service.icon] || ChartLineUp
 
   return (
-    <article className="h-full rounded-lg border border-line bg-white p-6 shadow-card transition duration-200 hover:-translate-y-1 hover:shadow-soft sm:min-h-[320px] sm:p-7 lg:p-8 xl:min-h-[365px] xl:p-9">
-      <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-primary-soft text-primary sm:h-14 sm:w-14 lg:mb-9 lg:h-16 lg:w-16">
-        <Icon aria-hidden="true" className="h-6 w-6 sm:h-7 sm:w-7 lg:h-8 lg:w-8" strokeWidth={2.8} />
+    <motion.article 
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      className="group relative h-full rounded-2xl border border-brand-gray bg-white p-8 shadow-[0_4px_20px_rgba(0,0,0,0.05)] transition-all duration-300 hover:-translate-y-2 hover:border-brand-orange/50 hover:shadow-xl overflow-hidden"
+    >
+      <div className="absolute right-0 top-0 h-24 w-24 rounded-bl-[100px] bg-brand-orange/5 transition-transform duration-500 group-hover:scale-110" />
+      
+      <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-xl bg-brand-orange/10 text-brand-orange transition-colors duration-300 group-hover:bg-brand-orange group-hover:text-white relative z-10">
+        <Icon weight="regular" className="h-8 w-8" />
       </div>
-      <h3 className="text-xl font-extrabold leading-tight text-ink sm:text-[22px] xl:text-[23px]">
+      
+      <h3 className="mb-4 font-heading text-2xl font-bold leading-tight text-brand-dark relative z-10">
         {service.title}
       </h3>
-      <p className="mt-4 text-sm leading-6 text-body sm:text-base sm:leading-7 lg:mt-6">
+      
+      <p className="text-base leading-relaxed text-gray-600 relative z-10">
         {service.description}
       </p>
-    </article>
+    </motion.article>
   )
 }
 

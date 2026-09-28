@@ -4,18 +4,19 @@ import SectionHeading from '../ui/SectionHeading'
 
 function Process() {
   return (
-    <section id="process" className="bg-blush py-12 md:py-16 lg:py-20 xl:py-[86px]">
-      <div className="mx-auto w-full max-w-[1404px] px-4 sm:px-6 lg:px-8 2xl:px-0">
+    <section id="process" className="bg-brand-light py-20 md:py-24 lg:py-32 overflow-hidden">
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           title="Our Process"
-          description="A proven methodology that transforms challenges into opportunities and delivers consistent results."
+          description="A proven methodology that transforms challenges into opportunities and delivers consistent results through structured execution."
         />
-        <div className="mt-9 grid gap-5 sm:mt-12 sm:grid-cols-2 sm:gap-6 lg:mt-16 lg:gap-8 xl:mt-[72px] xl:grid-cols-4 xl:gap-9">
+        <div className="mt-20 grid gap-16 lg:gap-8 lg:grid-cols-4 relative">
           {processData.map((item, index) => (
             <ProcessCard
               item={item}
               key={item.step}
-              showArrow={index < processData.length - 1}
+              index={index}
+              total={processData.length}
             />
           ))}
         </div>

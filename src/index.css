@@ -1,12 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    color-scheme: light;
+    color-scheme: light dark;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -30,7 +28,7 @@
   }
 
   body {
-    @apply m-0 bg-white font-sans text-body antialiased;
+    @apply m-0 bg-brand-light font-sans text-brand-text antialiased;
   }
 
   button,
@@ -40,5 +38,17 @@
 
   img {
     @apply h-auto max-w-full;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #081024;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #F95D0A;
+    border-radius: 4px;
   }
 }

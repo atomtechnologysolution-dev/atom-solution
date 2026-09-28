@@ -1,135 +1,197 @@
-import { Mail, MapPin, Phone } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
+import { PaperPlaneRight, ArrowRight, ShieldCheck, FileText } from '@phosphor-icons/react'
 import logo from '../../assets/images/atom-logo.png'
+import {
+  footerCompanyLinks,
+  footerResourcesLinks,
+  footerServicesLinks,
+  socialLinks
+} from '../../data/footerLinks'
 
-const quickLinks = ['About Us', 'Our Team', 'Case Studies', 'Blog', 'Careers', 'Contact']
-const footerServices = [
-  'Growth Marketing',
-  'Performance Ads',
-  'Brand Strategy',
-  'Business Consulting',
-  'SEO & Content',
-  'Analytics & Insights',
-]
-const legalLinks = ['Privacy Policy', 'Terms of Service', 'Cookie Policy']
-const socials = ['in', 'x', 'f', 'ig']
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.2
+    }
+  }
+}
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" }
+  }
+}
 
 function Footer() {
   return (
-    <footer className="bg-navy text-white lg:min-h-[550px]">
-      <div className="mx-auto w-full max-w-[1404px] px-4 py-5 sm:px-6 md:py-16 lg:px-8 lg:py-20 xl:py-5 2xl:px-0">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-16 xl:gap-20">
-          <div>
-            <a
-              href="/"
-              aria-label="Atom homepage"
-              className="inline-flex rounded-lg bg-white px-4 py-3 sm:px-5"
-            >
+    <footer className="bg-brand-dark pt-0 pb-10 relative overflow-hidden flex flex-col">
+      
+      {/* Sliding Marquee / Swiper simulation for attention */}
+      <div className="w-full bg-brand-orange py-4 overflow-hidden mb-16 flex whitespace-nowrap">
+        <motion.div 
+          className="flex gap-8 items-center font-heading font-bold text-white text-xl uppercase tracking-wider"
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{ duration: 20, ease: "linear", repeat: Infinity }}
+        >
+          {Array(10).fill("Let's Build Something Great").map((text, i) => (
+            <span key={i} className="flex items-center gap-8">
+              {text} <span className="w-2 h-2 rounded-full bg-white" />
+            </span>
+          ))}
+        </motion.div>
+      </div>
+
+      {/* Decorative blurred orb */}
+      <div className="absolute -left-20 top-40 h-96 w-96 rounded-full bg-brand-orange/5 blur-[120px] pointer-events-none" />
+      <div className="absolute -right-20 bottom-0 h-96 w-96 rounded-full bg-blue-500/5 blur-[120px] pointer-events-none" />
+
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-16"
+        >
+          {/* Brand Column */}
+          <motion.div variants={itemVariants} className="lg:col-span-4 flex flex-col gap-6 lg:pr-8">
+            <a href="/" className="inline-block" aria-label="Atom homepage">
               <img
                 src={logo}
                 alt="Atom Technology Solution"
-                className="h-10 w-auto sm:h-12 lg:h-14"
+                className="relative h-12 w-auto bg-white rounded-xl p-1.5 shadow-lg shadow-white/5"
               />
             </a>
-            <p className="mt-5 max-w-[320px] text-base leading-7 text-white/75 sm:mt-7 lg:text-lg lg:leading-8">
-              Empowering businesses with strategic marketing and consulting
-              services that drive measurable growth and lasting success.
+            <p className="text-brand-text leading-relaxed">
+              Atom Technology Solution helps ambitious businesses grow through custom web development, mobile apps, and data-driven digital marketing.
             </p>
-            <div className="mt-6 flex gap-3 sm:mt-8 sm:gap-4">
-              {socials.map((social) => (
-                <a
-                  aria-label={`Atom social ${social}`}
-                  className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-white transition hover:bg-primary"
-                  href="#"
-                  key={social}
-                >
-                  {social}
-                </a>
-              ))}
-            </div>
-          </div>
-          <div className="grid  grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 lg:gap-12 xl:gap-25 sm:gap-12 md:gap-16">
-          <div>
-            <h2 className="text-lg font-extrabold text-white lg:text-xl">
-              Quick Links
-            </h2>
-            <ul className="mt-5 space-y-1 sm:mt-7 sm:space-y-4 pl-2">
-              {quickLinks.map((link) => (
-                <li key={link}>
-                  <a
-                    className="inline-flex min-h-10 items-center text-base text-white/70 transition hover:text-white lg:text-lg"
-                    href="#"
+            
+            <form className="relative mt-2 group" onSubmit={(e) => e.preventDefault()}>
+              <input 
+                type="email" 
+                placeholder="Subscribe to newsletter" 
+                className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-4 pr-12 text-white placeholder:text-gray-500 focus:outline-none focus:border-brand-orange transition-colors"
+              />
+              <button className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-brand-orange rounded-lg flex items-center justify-center text-white hover:bg-orange-600 transition-colors">
+                <PaperPlaneRight size={16} weight="fill" />
+              </button>
+            </form>
+          </motion.div>
+
+          {/* Links Columns */}
+          <motion.div variants={itemVariants} className="lg:col-span-2 lg:col-start-6">
+            <h3 className="mb-6 font-heading text-lg font-bold text-white flex items-center gap-2">
+              Company
+            </h3>
+            <ul className="flex flex-col gap-3">
+              {footerCompanyLinks.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    className="text-brand-text transition-all hover:text-brand-orange inline-flex items-center group"
+                    to={link.href}
                   >
-                    {link}
-                  </a>
+                    <span className="relative flex items-center transition-transform duration-300 group-hover:translate-x-4">
+                      <ArrowRight size={12} className="absolute -left-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
+                      {link.label}
+                    </span>
+                  </Link>
                 </li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
-          <div>
-            <h2 className="text-lg font-extrabold text-white lg:text-xl">
+          <motion.div variants={itemVariants} className="lg:col-span-3">
+            <h3 className="mb-6 font-heading text-lg font-bold text-white flex items-center gap-2">
               Services
-            </h2>
-            <ul className="mt-5 space-y-1 sm:mt-7 sm:space-y-4">
-              {footerServices.map((service) => (
-                <li key={service}>
-                  <a
-                    className="inline-flex min-h-10 items-center text-base text-white/70 transition hover:text-white lg:text-lg"
-                    href="#services"
+            </h3>
+            <ul className="flex flex-col gap-3">
+              {footerServicesLinks.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    className="text-brand-text transition-all hover:text-brand-orange inline-flex items-center group"
+                    to={link.href}
                   >
-                    {service}
-                  </a>
+                    <span className="relative flex items-center transition-transform duration-300 group-hover:translate-x-4">
+                      <ArrowRight size={12} className="absolute -left-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
+                      {link.label}
+                    </span>
+                  </Link>
                 </li>
               ))}
             </ul>
-          </div>
-          </div>
-          <div>
-            <h2 className="text-lg font-extrabold text-white lg:text-xl">
-              Contact Us
-            </h2>
-            <ul className="mt-5 space-y-5 text-base leading-7 text-white/70 sm:mt-7 lg:space-y-6 lg:text-lg lg:leading-8">
-              <li className="flex gap-4 sm:gap-5">
-                <MapPin aria-hidden="true" className="mt-1 shrink-0 text-primary" />
-                <span>
-                  123 Business Avenue
-                  <br />
-                  New York, NY 10001
-                </span>
-              </li>
-              <li className="flex gap-4 sm:gap-5">
-                <Phone aria-hidden="true" className="mt-1 shrink-0 text-primary" />
-                <a href="tel:+15551234567" className="transition hover:text-white">
-                  +1 (555) 123-4567
-                </a>
-              </li>
-              <li className="flex gap-4 sm:gap-5">
-                <Mail aria-hidden="true" className="mt-1 shrink-0 text-primary" />
-                <a
-                  href="mailto:hello@atomtechnologyandsolutions.com"
-                  className="break-all transition hover:text-white"
-                >
-                  hello@atomtechnologyandsolutions.com
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
+          </motion.div>
 
-        <div className="mt-10 flex flex-col gap-5 lg:gap-20 border-t border-white/10 pt-6 text-sm text-white/65 sm:mt-12 sm:pt-8 md:flex-row md:items-center md:justify-between lg:mt-14 lg:text-base">
-          <p>&copy; 2026 Atom Technology & Solutions. All rights reserved.</p>
-          <div className="flex flex-col-1 gap-10 flex-auto sm:flex-row sm:flex-wrap sm:gap-8 md:gap-12">
-            {legalLinks.map((link) => (
-              <a
-                className="inline-flex min-h-10 items-center transition hover:text-white"
-                href="#"
-                key={link}
-              >
-                {link}
-              </a>
-            ))}
+          <motion.div variants={itemVariants} className="lg:col-span-2">
+            <h3 className="mb-6 font-heading text-lg font-bold text-white flex items-center gap-2">
+              Resources
+            </h3>
+            <ul className="flex flex-col gap-3">
+              {footerResourcesLinks.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    className="text-brand-text transition-all hover:text-brand-orange inline-flex items-center group"
+                    to={link.href}
+                  >
+                    <span className="relative flex items-center transition-transform duration-300 group-hover:translate-x-4">
+                      <ArrowRight size={12} className="absolute -left-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
+                      {link.label}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        </motion.div>
+
+        {/* Bottom Bar */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="flex flex-col items-center justify-between gap-6 border-t border-white/10 pt-8 sm:flex-row"
+        >
+          <div className="flex items-center gap-4">
+            {socialLinks.map((social) => {
+              const Icon = social.icon
+              return (
+                <a
+                  className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/5 text-brand-text transition-all hover:bg-brand-orange hover:text-white hover:-translate-y-1 shadow-lg"
+                  href={social.href}
+                  key={social.label}
+                  aria-label={social.label}
+                >
+                  <Icon size={20} weight="fill" />
+                </a>
+              )
+            })}
           </div>
-        </div>
+
+          <p className="text-sm text-brand-text/70 text-center sm:text-left order-3 sm:order-2">
+            &copy; {new Date().getFullYear()} Atom Technology Solution. All rights reserved.
+          </p>
+
+          <div className="flex gap-6 text-sm order-2 sm:order-3">
+            <Link
+              className="text-brand-text/70 transition hover:text-brand-orange flex items-center gap-1"
+              to="/privacy"
+            >
+              <ShieldCheck size={16} /> Privacy
+            </Link>
+            <Link
+              className="text-brand-text/70 transition hover:text-brand-orange flex items-center gap-1"
+              to="/terms"
+            >
+              <FileText size={16} /> Terms
+            </Link>
+          </div>
+        </motion.div>
       </div>
     </footer>
   )

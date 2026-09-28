@@ -1,37 +1,43 @@
-import { Star } from 'lucide-react'
+import { Star } from '@phosphor-icons/react'
+import { motion } from 'framer-motion'
 
-function TestimonialCard({ testimonial }) {
+function TestimonialCard({ testimonial, index }) {
   return (
-    <article className="flex h-full flex-col rounded-lg bg-white p-6 shadow-card sm:min-h-[320px] sm:p-7 lg:min-h-[350px] lg:p-9">
-      <div className="flex gap-1.5 text-primary sm:gap-2" aria-label={`${testimonial.rating} stars`}>
-        {Array.from({ length: testimonial.rating }).map((_, index) => (
+    <motion.article 
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      className="flex h-full flex-col rounded-2xl border border-brand-gray bg-white p-8 shadow-[0_4px_20px_rgba(0,0,0,0.05)] transition-all duration-300 hover:-translate-y-2 hover:border-brand-orange/50 hover:shadow-xl"
+    >
+      <div className="flex gap-1.5 text-brand-orange" aria-label={`${testimonial.rating} stars`}>
+        {Array.from({ length: testimonial.rating }).map((_, i) => (
           <Star
             aria-hidden="true"
-            fill="currentColor"
-            key={index}
-            className="h-5 w-5 sm:h-[22px] sm:w-[22px]"
-            strokeWidth={1.8}
+            weight="fill"
+            key={i}
+            className="h-5 w-5"
           />
         ))}
       </div>
-      <blockquote className="mt-5 text-sm leading-6 text-ink sm:mt-7 sm:text-base sm:leading-7 lg:mt-8">
+      <blockquote className="mt-6 text-base leading-relaxed text-brand-dark flex-grow font-medium">
         "{testimonial.quote}"
       </blockquote>
-      <div className="mt-auto flex items-center gap-4 pt-7 sm:gap-5 lg:pt-9">
+      <div className="mt-8 flex items-center gap-4 pt-6 border-t border-brand-gray">
         <img
           src={testimonial.avatar}
-          alt=""
-          className="h-12 w-12 shrink-0 rounded-full object-cover sm:h-[58px] sm:w-[58px]"
+          alt={testimonial.name}
+          className="h-12 w-12 shrink-0 rounded-full object-cover"
           loading="lazy"
         />
         <div>
-          <p className="text-base font-extrabold leading-tight text-ink sm:text-lg lg:text-xl">
+          <p className="text-base font-bold leading-tight text-brand-dark">
             {testimonial.name}
           </p>
-          <p className="mt-1 text-sm text-body sm:text-base lg:text-lg">{testimonial.role}</p>
+          <p className="mt-1 text-sm text-gray-500">{testimonial.role}</p>
         </div>
       </div>
-    </article>
+    </motion.article>
   )
 }
 
